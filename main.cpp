@@ -12,6 +12,7 @@ int main() {
     CStack s2 = CStack(5); // 1) constr; 2) move constr
     CStack s3(CStack(1)); // 1) constr; 2) move constr
 
+
     return 0;
 }
 
