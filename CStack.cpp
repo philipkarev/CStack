@@ -7,13 +7,13 @@
 CStack::CStack()
     : capacity(0)
     , top(-1) {
-//    cout << "called default constructor" << endl;
+    cout << "called default constructor" << endl;
 }
 
 
 CStack::CStack(int n) {
 
-//    cout  << "called constr" << endl;
+    cout  << "called constr" << endl;
     if (n > 0) {
         capacity = n;
         container = new int[capacity];
@@ -28,7 +28,7 @@ CStack::CStack(int n) {
 
 CStack::~CStack() {
 
-//    cout << "called destr" << endl;
+    cout << "called destr" << endl;
     if (capacity > 0) {
         delete [] container;
     }
@@ -37,7 +37,7 @@ CStack::~CStack() {
 
 CStack::CStack(const CStack& s) {
 
-//    cout << "called copy constr" << endl;
+    cout << "called copy constr" << endl;
     capacity = s.capacity;
     if (capacity > 0) {
         container = new int[capacity];
@@ -53,7 +53,7 @@ CStack::CStack(const CStack& s) {
 }
 
 
-/*CStack::CStack(CStack&& s) noexcept {
+CStack::CStack(CStack&& s) noexcept {
 
     cout << "called move constr" << endl;
     container = s.container;
@@ -62,15 +62,15 @@ CStack::CStack(const CStack& s) {
 
     s.capacity = 0;
     s.top = -1;
-}*/
+}
 
 
-CStack::CStack(CStack&& s) noexcept
+/*CStack::CStack(CStack&& s) noexcept
     : capacity(0)
     , top(1) {
     cout << "called move constr" << endl;
     (*this) = move(s);
-}
+}*/
 
 
 int CStack::push(int x) {
@@ -132,6 +132,7 @@ int CStack::isFull() {
 
 CStack& CStack::operator=(const CStack& s) {
 
+    cout << "called copy =" << endl;
     capacity = s.capacity;
     container = new int[capacity];
     top = -1;
@@ -144,6 +145,7 @@ CStack& CStack::operator=(const CStack& s) {
 
 CStack& CStack::operator=(CStack&& s) {
 
+    cout << "called move =" << endl;
     if (this != &s) {
         if (capacity > 0) {
             delete[] container;
