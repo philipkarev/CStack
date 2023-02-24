@@ -4,8 +4,16 @@
 #include "CStack.h"
 
 
+CStack::CStack()
+    : capacity(0)
+    , top(-1) {
+//    cout << "called default constructor" << endl;
+}
+
+
 CStack::CStack(int n) {
 
+//    cout  << "called constr" << endl;
     if (n > 0) {
         capacity = n;
         container = new int[capacity];
@@ -19,6 +27,8 @@ CStack::CStack(int n) {
 
 
 CStack::~CStack() {
+
+//    cout << "called destr" << endl;
     if (capacity > 0) {
         delete [] container;
     }
@@ -27,6 +37,7 @@ CStack::~CStack() {
 
 CStack::CStack(const CStack& s) {
 
+//    cout << "called copy constr" << endl;
     capacity = s.capacity;
     if (capacity > 0) {
         container = new int[capacity];
@@ -39,6 +50,26 @@ CStack::CStack(const CStack& s) {
         capacity = 0;
         top = -1;
     }
+}
+
+
+/*CStack::CStack(CStack&& s) noexcept {
+
+    cout << "called move constr" << endl;
+    container = s.container;
+    capacity = s.capacity;
+    top = s.top;
+
+    s.capacity = 0;
+    s.top = -1;
+}*/
+
+
+CStack::CStack(CStack&& s) noexcept
+    : capacity(0)
+    , top(1) {
+    cout << "called move constr" << endl;
+    (*this) = move(s);
 }
 
 
@@ -111,17 +142,42 @@ CStack& CStack::operator=(const CStack& s) {
 }
 
 
-//CStack& CStack::operator++() {}
+CStack& CStack::operator=(CStack&& s) {
+
+    if (this != &s) {
+        if (capacity > 0) {
+            delete[] container;
+        }
+        container = s.container;
+        capacity = s.capacity;
+        top = s.top;
+        s.capacity = 0;
+        s.top = -1;
+    }
+    return (*this);
+}
 
 
-CStack& CStack::operator--() { // prefix
+CStack& CStack::operator++() { // prefix increment
+
+    push(0);
+    return (*this);
+}
+
+
+CStack& CStack::operator--() { // prefix decrement
 
     pop();
     return (*this);
 }
 
 
-//CStack CStack::operator++(int) {}
+CStack CStack::operator++(int) {
+
+    CStack tmp(*this);
+    ++(*this);
+    return tmp;
+}
 
 
 CStack CStack::operator--(int) {

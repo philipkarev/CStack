@@ -12,23 +12,26 @@ class CStack {
     int capacity; // capacity of stack
     int top; // top element
 public:
+    CStack();
     CStack(int);
     ~CStack();
     CStack(const CStack&);
+    CStack(CStack&&) noexcept;
 
     int push(int);
-    int pop(); // how it works? what means condition?
+    int pop();
     int peek();
     int size();
     int isEmpty();
     int isFull();
 
     CStack& operator=(const CStack&);
-    CStack& operator++(); // how it works?
+    CStack& operator=(CStack&&);
+    CStack& operator++();
     CStack& operator--();
-    CStack operator++(int); // how it works?
+    CStack operator++(int);
     CStack operator--(int);
-    CStack operator+(const CStack&); // how it works?
+    CStack operator+(const CStack&);
     friend ostream &operator<<(ostream&, const CStack&);
 };
 
