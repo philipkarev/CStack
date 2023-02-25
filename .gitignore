@@ -1,3 +1,5 @@
-main.o
-CStack.o
-a.out
+# ignore ALL .o files
+*.o
+
+# ignore ALL .out files
+*.out
