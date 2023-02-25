@@ -7,15 +7,15 @@
 CStack::CStack()
     : capacity(0)
     , top(-1) {
-    cout << "called default constructor ";
-    cout << this << endl;
+
+    cout << this << " - called default constructor " << endl;
 }
 
 
 CStack::CStack(int n) {
 
-    cout  << "called constr ";
-    cout << this << endl;
+    cout << this << " - called constr " << endl;
+
     if (n > 0) {
         capacity = n;
         container = new int[capacity];
@@ -30,10 +30,9 @@ CStack::CStack(int n) {
 
 CStack::~CStack() {
 
-    cout << "called destr ";
-    cout << this << endl;
+    cout << this << " - called destr" << endl;
 
-    if (capacity >= 0) {
+    if (capacity > 0) {
         delete [] container;
     }
 }
@@ -41,8 +40,7 @@ CStack::~CStack() {
 
 CStack::CStack(const CStack& s) {
 
-    cout << "called copy constr";
-    cout << this << endl;
+    cout << this << " - called copy constr" << endl;
 
     capacity = s.capacity;
     if (capacity > 0) {
@@ -61,8 +59,7 @@ CStack::CStack(const CStack& s) {
 
 CStack::CStack(CStack&& s) noexcept {
 
-    cout << "called move constr ";
-    cout << this << endl;
+    cout << this << " - called move constr " << endl;
 
     container = s.container;
     capacity = s.capacity;
