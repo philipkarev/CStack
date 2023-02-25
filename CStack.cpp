@@ -32,7 +32,8 @@ CStack::~CStack() {
 
     cout << "called destr ";
     cout << this << endl;
-    if (capacity > 0) {
+
+    if (capacity >= 0) {
         delete [] container;
     }
 }
@@ -62,6 +63,7 @@ CStack::CStack(CStack&& s) noexcept {
 
     cout << "called move constr ";
     cout << this << endl;
+
     container = s.container;
     capacity = s.capacity;
     top = s.top;
@@ -83,20 +85,21 @@ int CStack::push(int x) {
 
     if (isFull()) {
         cout << "Impossible to push value" << endl;
-        return 0;
+        return 1;
     }
     container[++top] = x;
-    return 1;
+    return 0;
 }
 
 
-int CStack::pop() {
+int CStack::pop(int& result) {
 
     if (isEmpty()) {
         cout << "Cannot pop" << endl;
         return 0;
     }
-    return container[top--];
+    result = container[top--];
+    return 1;
 }
 
 
@@ -116,23 +119,22 @@ int CStack::size() {
 }
 
 
-int CStack::isEmpty() {
+bool CStack::isEmpty() {
 
     if (top == -1) {
         cout << "Stack is empty" << endl;
-        return 1;
+        return true;
     }
-    return 0;
+    return false;
 }
 
-
-int CStack::isFull() {
+ bool CStack::isFull() {
 
     if (size() == capacity) {
         cout << "Stack is full" << endl;
-        return 1;
+        return true;
     }
-    return 0;
+    return false;
 }
 
 
@@ -179,7 +181,9 @@ CStack& CStack::operator++() { // prefix increment
 
 CStack& CStack::operator--() { // prefix decrement
 
-    pop();
+    int tmp;
+    int& ref_tmp = tmp;
+    pop(ref_tmp);
     return (*this);
 }
 

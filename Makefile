@@ -1,4 +1,4 @@
-a: CStack.o main.o
+CStackRunner: CStack.o main.o
 	wg++ -fno-elide-constructors -std=c++11 CStack.o main.o
 
 main.o: main.cpp CStack.h

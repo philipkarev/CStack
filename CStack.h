@@ -19,11 +19,11 @@ public:
     CStack(CStack&&) noexcept;
 
     int push(int);
-    int pop();
+    int pop(int&);
     int peek();
     int size();
-    int isEmpty();
-    int isFull();
+    bool isEmpty();
+    bool isFull();
 
     CStack& operator=(const CStack&);
     CStack& operator=(CStack&&);
