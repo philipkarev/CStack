@@ -8,12 +8,13 @@
 #include "CStack.h"
 
 class CData0 : public CStack {
-
-
+public:
+    int output();
 };
 
 class CData1 : public CStack {
-
+public:
+    int output();
 
 };
 

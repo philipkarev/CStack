@@ -22,6 +22,8 @@ public:
     bool isEmpty();
     bool isFull();
 
+//    virtual int output() = 0;
+
     CStack& operator=(const CStack&);
     CStack& operator=(CStack&&);
     CStack& operator++();

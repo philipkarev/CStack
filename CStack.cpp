@@ -118,35 +118,34 @@ bool CStack::isEmpty() {
 }
 
 
-CStack& CStack::operator=(const CStack& s) {
+CStack& CStack::operator=(const CStack& other) {
 
-    cout << "called copy =" << endl;
-    cout << this << endl;
-    cout << endl;
-    capacity = s.capacity;
-    container = new int[capacity];
+    cout << this << " - called copy oper=" << endl;
+
+    container = new int[other.capacity];
+    capacity = other.capacity;
     top = -1;
     for (size_t i = 0; i < capacity; ++i) {
-        push(s.container[i]);
+        push(other.container[i]);
     }
     return (*this);
 }
 
 
-CStack& CStack::operator=(CStack&& s) {
+CStack& CStack::operator=(CStack&& other) {
 
-    cout << "called move =" << endl;
-    cout << this << endl;
-    cout << endl;
-    if (this != &s) {
-        if (capacity > 0) {
-            delete[] container;
-        }
-        container = s.container;
-        capacity = s.capacity;
-        top = s.top;
-        s.capacity = 0;
-        s.top = -1;
+    cout << this << " - called copy oper=" << endl;
+
+    if (this != &other) {
+        delete[] container;
+
+        container = other.container;
+        capacity = other.capacity;
+        top = other.top;
+
+        other.container = nullptr;
+        other.capacity = 0;
+        other.top = -1;
     }
     return (*this);
 }
