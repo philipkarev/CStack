@@ -1,6 +1,3 @@
-//
-// Created by phlilp on 22.02.23.
-//
 #ifndef CSTACK_CSTACK_H
 #define CSTACK_CSTACK_H
 
@@ -9,19 +6,19 @@ using namespace std;
 
 class CStack {
     int* container; // array of integers
-    int capacity; // capacity of stack
+    size_t capacity; // capacity of stack
     int top; // top element
 public:
     CStack();
-    CStack(int);
+    CStack(size_t);
     ~CStack();
     CStack(const CStack&);
     CStack(CStack&&) noexcept;
 
     int push(int);
     int pop(int&);
-    int peek();
-    int size();
+    int peek(int&);
+    size_t size();
     bool isEmpty();
     bool isFull();
 

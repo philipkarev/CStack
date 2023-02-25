@@ -1,72 +1,54 @@
-//
-// Created by phlilp on 22.02.23.
-//
 #include "CStack.h"
 
 
 CStack::CStack()
-    : capacity(0)
+    : container(nullptr)
+    , capacity(0)
     , top(-1) {
 
     cout << this << " - called default constructor " << endl;
 }
 
 
-CStack::CStack(int n) {
+CStack::CStack(size_t length)
+    : container(new int[length])
+    , capacity(length)
+    , top(-1) {
 
     cout << this << " - called constr " << endl;
-
-    if (n > 0) {
-        capacity = n;
-        container = new int[capacity];
-        top = -1;
-    } else {
-        cout << "Incorrect input capacity of stack" << endl;
-        capacity = 0;
-        top = -1; // impossible to pop, push; prevent memory leak
-    }
 }
 
 
 CStack::~CStack() {
 
     cout << this << " - called destr" << endl;
-
-    if (capacity > 0) {
-        delete [] container;
-    }
+    delete [] container;
 }
 
 
-CStack::CStack(const CStack& s) {
+CStack::CStack(const CStack& other)
+    : container(new int[other.capacity])
+    , capacity(other.capacity)
+    , top(-1)
+{
 
     cout << this << " - called copy constr" << endl;
-
-    capacity = s.capacity;
-    if (capacity > 0) {
-        container = new int[capacity];
-        top = -1;
-        for (int i = 0; i < s.top + 1; ++i) {
-            push(s.container[i]);
-        }
-    } else {
-        cout << "Incorrect input capacity of stack" << endl;
-        capacity = 0;
-        top = -1;
-    }
+    for (int i = 0; i < other.top + 1; ++i)
+        push(other.container[i]);
 }
 
 
-CStack::CStack(CStack&& s) noexcept {
+CStack::CStack(CStack&& other) noexcept {
 
     cout << this << " - called move constr " << endl;
 
-    container = s.container;
-    capacity = s.capacity;
-    top = s.top;
+    container = other.container;
+    capacity = other.capacity;
+    top = other.top;
 
-    s.capacity = 0;
-    s.top = -1;
+    other.container = nullptr;
+    other.capacity = 0;
+    other.top = -1;
 }
 
 
@@ -100,17 +82,18 @@ int CStack::pop(int& result) {
 }
 
 
-int CStack::peek() {
+int CStack::peek(int& result) {
 
     if (isEmpty()) {
         cout << "Cannot peek" << endl;
         return 0;
     }
-    return container[top];
+    result = container[top];
+    return 1;
 }
 
 
-int CStack::size() {
+size_t CStack::size() {
 
     return top + 1;
 }
@@ -143,7 +126,7 @@ CStack& CStack::operator=(const CStack& s) {
     capacity = s.capacity;
     container = new int[capacity];
     top = -1;
-    for (int i = 0; i < capacity; ++i) {
+    for (size_t i = 0; i < capacity; ++i) {
         push(s.container[i]);
     }
     return (*this);
@@ -201,7 +184,17 @@ CStack CStack::operator--(int) {
 }
 
 
-//CStack operator+(const CStack&);
+CStack CStack::operator+(const CStack& s) {
+
+    CStack result(capacity + s.capacity);
+
+    for (size_t i = 0; i < capacity; ++i)
+        result.push(container[i]);
+    for (size_t i = 0; i < s.capacity; ++i)
+        result.push(s.container[i]);
+
+    return result;
+}
 
 
 ostream &operator<<(ostream& stream, const CStack& s) {
