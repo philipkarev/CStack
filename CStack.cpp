@@ -6,7 +6,7 @@ CStack::CStack()
     , capacity(0)
     , top(-1) {
 
-    cout << this << " - called default constructor " << endl;
+//    cout << this << " - called default constructor " << endl;
 }
 
 
@@ -15,13 +15,13 @@ CStack::CStack(size_t length)
     , capacity(length)
     , top(-1) {
 
-    cout << this << " - called constr " << endl;
+//    cout << this << " - called constr " << endl;
 }
 
 
 CStack::~CStack() {
 
-    cout << this << " - called destr" << endl;
+//    cout << this << " - called destr" << endl;
     delete [] container;
 }
 
@@ -29,10 +29,9 @@ CStack::~CStack() {
 CStack::CStack(const CStack& other)
     : container(new int[other.capacity])
     , capacity(other.capacity)
-    , top(-1)
-{
+    , top(-1) {
 
-    cout << this << " - called copy constr" << endl;
+//    cout << this << " - called copy constr" << endl;
     for (int i = 0; i < other.top + 1; ++i)
         push(other.container[i]);
 }
@@ -40,7 +39,7 @@ CStack::CStack(const CStack& other)
 
 CStack::CStack(CStack&& other) noexcept {
 
-    cout << this << " - called move constr " << endl;
+//    cout << this << " - called move constr " << endl;
 
     container = other.container;
     capacity = other.capacity;
@@ -120,7 +119,7 @@ bool CStack::isEmpty() {
 
 CStack& CStack::operator=(const CStack& other) {
 
-    cout << this << " - called copy oper=" << endl;
+//    cout << this << " - called copy oper=" << endl;
 
     container = new int[other.capacity];
     capacity = other.capacity;
@@ -134,7 +133,7 @@ CStack& CStack::operator=(const CStack& other) {
 
 CStack& CStack::operator=(CStack&& other) {
 
-    cout << this << " - called copy oper=" << endl;
+//    cout << this << " - called copy oper=" << endl;
 
     if (this != &other) {
         delete[] container;
@@ -183,14 +182,24 @@ CStack CStack::operator--(int) {
 }
 
 
-CStack CStack::operator+(const CStack& s) {
+CStack CStack::operator+(const CStack& other) {
 
-    CStack result(capacity + s.capacity);
+    CStack tmpThis(*this), tmpOther(other);
+    CStack result(capacity + other.capacity);
 
-    for (size_t i = 0; i < capacity; ++i)
-        result.push(container[i]);
-    for (size_t i = 0; i < s.capacity; ++i)
-        result.push(s.container[i]);
+    int tmp;
+    int &ref_tmp = tmp;
+
+    while (true) {
+        if (tmpThis.pop(ref_tmp) == 0)
+            break;
+        result.push(ref_tmp);
+    }
+    while (true) {
+        if (tmpOther.pop(ref_tmp) == 0)
+            break;
+        result.push(ref_tmp);
+    }
 
     return result;
 }
